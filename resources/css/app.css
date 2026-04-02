@@ -1,8 +1,22 @@
 @import "tailwindcss";
 
+body {
+    margin: 0;
+    padding: 0;
+  }
+
 @theme {
     --color-cotton: oklch(93.78% 0.019 100.13);
     --color-cherryred: oklch(37.93% 0.155 29.37);
     --color-maroon: #630000;
     --color-noirblack: #1b1717;
+
+    /* Custom colors */
+    --color-bggray: #111113; /* bg-bggray  for background color dark*/
+    --color-whgray: #B4B4B4; /* whgray for background color light*/
+    --color-sldgreen: #30A46C; /* sldgreen for success color*/
+    --color-sldred: #E5484D; /* sldred for error color*/
+    --color-veryhite: #EEEEEE; /* veryhite for text color light*/
+    /* end of custom colors */
+    
 }
