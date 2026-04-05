@@ -17,7 +17,12 @@
 ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇⠀⠀⠀ 
 ⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀ 
 ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+### Legacy
+- ! = Important/Penting.
+- ; = Done.
+Anyway - Tailwindcss 1 unit equ 4 px
 
 
 ## Objective
-login form pake desain login Github.
+; login form pake desain login Github.
+!NeedReference - Design we're gonna use is headbar. Karena lebih baik melihat dalam 1 garis lurus horizontal/vertikal, instead sidebar.

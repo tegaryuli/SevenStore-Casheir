@@ -41,4 +41,5 @@ PHP requirement ? ... go to file 'composer.json' line 11
     ## "require": {
         "php": "^8.2",
 
-## Else
+## AnythingElse
+Name structure using camelcase only for files. Folder will uses lowercases

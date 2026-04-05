@@ -8,6 +8,7 @@ const dictionary = {
             forgotPassword: "Lupa kata sandi?",
             rememberMe: "Ingat saya",
             signIn: "Masuk",
+            emailLabel: "Username Atau Email",
         },
     },
 };

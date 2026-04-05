@@ -16,7 +16,7 @@ export function LoginLayout({ children }) {
                         label={t("auth.usernameOrEmail")}
                         type="email"
                         autoComplete="on"
-                        placeholder="you@example.com"
+                        placeholder={t("auth.emailLabel")}
                     />
 
                     <LabeInput
