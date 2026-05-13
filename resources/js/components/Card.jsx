@@ -1,57 +1,28 @@
-function cx(...parts) {
-    return parts.filter(Boolean).join(" ");
-}
+import React from 'react';
 
-export function Card({ className, children, ...props }) {
+export function Card({ 
+    children = "Konten default kartu.", 
+    title = "Judul Kartu", 
+    footer = "Info Footer", 
+    className = ""
+ }){
     return (
-        <div
-            className={cx(
-                "rounded-md border border-veryhite/20 bg-noirblack text-veryhite shadow-lg shadow-black/25",
-                className,
+        <div className={`bg-dark border border-gray/20 rounded-xl overflow-hidden shadow-lg ${className}`}>
+            {title && (
+                <div className="px-6 py-4 border-b border-gray/10 bg-lidark/50">
+                    <h3 className="text-light font-bold text-lg tracking-wide">
+                        {title}
+                    </h3>
+                </div>
             )}
-            {...props}
-        >
-            {children}
+            <div className="px-6 py-5 text-gray leading-relaxed">
+                {children}
+            </div>
+            {footer && (
+                <div className="px-6 py-3 bg-gray/30 border-t border-gray/10">
+                    {footer}
+                </div>
+            )}
         </div>
     );
-}
-
-export function CardHeader({ className, children, ...props }) {
-    return (
-        <div className={cx("flex flex-col gap-1.5 border-b border-veryhite/10 px-6 py-4", className)} {...props}>
-            {children}
-        </div>
-    );
-}
-
-export function CardTitle({ className, children, ...props }) {
-    return (
-        <h3 className={cx("text-lg font-semibold leading-tight tracking-tight text-veryhite", className)} {...props}>
-            {children}
-        </h3>
-    );
-}
-
-export function CardDescription({ className, children, ...props }) {
-    return (
-        <p className={cx("text-sm text-whgray", className)} {...props}>
-            {children}
-        </p>
-    );
-}
-
-export function CardContent({ className, children, ...props }) {
-    return (
-        <div className={cx("px-6 py-4", className)} {...props}>
-            {children}
-        </div>
-    );
-}
-
-export function CardFooter({ className, children, ...props }) {
-    return (
-        <div className={cx("flex flex-wrap items-center gap-2 border-t border-veryhite/10 px-6 py-4", className)} {...props}>
-            {children}
-        </div>
-    );
-}
+};

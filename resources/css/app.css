@@ -1,22 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
-body {
-    margin: 0;
-    padding: 0;
-  }
-
 @theme {
-    --color-cotton: oklch(93.78% 0.019 100.13);
-    --color-cherryred: oklch(37.93% 0.155 29.37);
-    --color-maroon: #630000;
-    --color-noirblack: #1b1717;
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 
-    /* Custom colors */
-    --color-bggray: #111113; /* bg-bggray  for background color dark*/
-    --color-whgray: #B4B4B4; /* whgray for background color light*/
-    --color-sldgreen: #30A46C; /* sldgreen for success color*/
-    --color-sldred: #E5484D; /* sldred for error color*/
-    --color-veryhite: #EEEEEE; /* veryhite for text color light*/
+  /* Custom colors */
+      /*red and green = tujuan untuk confirm atau denny */
+    --color-confirm: #30A46C;     /* sldgreen for success color*/
+    --color-disconfirm: #E5484D;  /* sldred for error color*/
+      /* black and white = untuk hitam dan putih*/
+    --color-dark: #111113;        /* for background color dark*/
+    --color-lidark: #3B3B3B;      /* light dark */
+    --color-gray: #B4B4B4;        /* whgray for background color light*/
+    --color-light: #EEEEEE;       /* veryhite for text color light*/
+
+
+
+      /* main color */
+    --color-ascent: #2C57CA;      /* ascent color */
+
+
     /* end of custom colors */
     
+}
+
+@layer base {
+    html {
+        @apply font-sans antialiased;
+    }
+
+    input,
+    textarea,
+    select,
+    button {
+        font: inherit;
+    }
 }

@@ -2,24 +2,32 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
      * Seed the application's database.
+     *
+     * Catatan: jangan pakai WithoutModelEvents di seeder ini jika User mengisi
+     * display_id lewat event creating — tanpa event, kolom display_id kosong dan insert gagal.
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Role::updateOrCreate(
+            ['name' => 'admin'],
+            ['display_name' => 'Pemilik'],
+        );
+        Role::updateOrCreate(
+            ['name' => 'kasir'],
+            ['display_name' => 'Staff Kasir'],
+        );
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            UserSeeder::class,
         ]);
     }
 }
