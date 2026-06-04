@@ -1,10 +1,12 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { createInertiaApp } from "@inertiajs/react";
+import { createInertiaApp, router } from "@inertiajs/react";
 import "../css/app.css";
 
+import ProgressBar from "./components/ProgressBar";
+
 createInertiaApp({
-    progress: false,
+    progress: false, // Mematikan bawaan agar menggunakan animasi custom di ProgressBar
     resolve: (name) => {
         const pages = import.meta.glob("./pages/**/*.jsx", { eager: true });
         const path = `./pages/${name}.jsx`;
@@ -21,6 +23,11 @@ createInertiaApp({
         return component;
     },
     setup({ el, App, props }) {
-        createRoot(el).render(<App {...props} />);
+        createRoot(el).render(
+            <>
+                <ProgressBar />
+                <App {...props} />
+            </>
+        );
     },
 });

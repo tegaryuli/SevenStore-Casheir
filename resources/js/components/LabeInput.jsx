@@ -13,7 +13,10 @@ export function LabeInput({
     return (
         <div className="space-y-2">
             <div className="flex items-center justify-between">
-                <label className="block text-sm font-medium text-gray" htmlFor={id}>
+                <label
+                    className="block text-sm font-medium text-gray-11"
+                    htmlFor={id}
+                >
                     {label}
                 </label>
                 {rightElement}
@@ -26,9 +29,10 @@ export function LabeInput({
                 onChange={onChange}
                 autoComplete={autoComplete}
                 placeholder={placeholder}
-                className="w-full rounded-md border border-gray/25 bg-dark px-3 py-2 text-sm text-gray placeholder:text-gray/55 outline-none focus:border-sldgreen focus:ring-2 focus:ring-sldgreen/30"
+                className="w-full rounded-md border-gray-7 border bg-white px-3 py-2 text-md text-gray-11 placeholder:text-gray- outline-none focus:border-blue-7 
+                focus:ring-2 focus:ring-blue-7"
             />
-            {error ? <p className="text-xs text-disconfirm">{error}</p> : null}
+            {error ? <p className="text-xs text-error font-medium">{error}</p> : null}
         </div>
     );
 }

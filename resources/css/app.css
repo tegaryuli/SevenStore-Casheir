@@ -1,40 +1,46 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
+@import "./color/background.css";
+@import "./color/gray.css";
+@import "./color/ascent.css";
+
 @theme {
-  --font-sans:
-    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol", "Noto Color Emoji";
+    --color-white: #fff;
+    --color-black: #111;
 
-  /* Custom colors */
-      /*red and green = tujuan untuk confirm atau denny */
-    --color-confirm: #30A46C;     /* sldgreen for success color*/
-    --color-disconfirm: #E5484D;  /* sldred for error color*/
-      /* black and white = untuk hitam dan putih*/
-    --color-dark: #111113;        /* for background color dark*/
-    --color-lidark: #3B3B3B;      /* light dark */
-    --color-gray: #B4B4B4;        /* whgray for background color light*/
-    --color-light: #EEEEEE;       /* veryhite for text color light*/
+    /* Ascent*/
+    --color-blue-1: #fdfdfe;
+    --color-blue-2: #f7f9ff;
+    --color-blue-3: #edf2fe;
+    --color-blue-4: #dfeaff;
+    --color-blue-5: #d0dfff;
+    --color-blue-6: #bdd1ff;
+    --color-blue-7: #a6bff9;
+    --color-blue-8: #87a5ef;
+    --color-blue-9: #3d63dd;
+    --color-blue-10: #3657c3;
+    --color-blue-11: #395bc7;
+    --color-blue-12: #1d2e5c;
 
+    --color-blue-a6: #004eff42;
+    --color-blue-contrast: #fff;
 
+    /* Gray */
+    --color-gray-1: #fcfcfd;
+    --color-gray-2: #f9f9fb;
+    --color-gray-3: #eff0f3;
+    --color-gray-4: #e7e8ec;
+    --color-gray-5: #e0e1e6;
+    --color-gray-6: #d8d9e0;
+    --color-gray-7: #cdced7;
+    --color-gray-8: #b9bbc6;
+    --color-gray-9: #8b8d98;
+    --color-gray-10: #80828d;
+    --color-gray-11: #62636c;
+    --color-gray-12: #1e1f24;
 
-      /* main color */
-    --color-ascent: #2C57CA;      /* ascent color */
-
-
-    /* end of custom colors */
-    
-}
-
-@layer base {
-    html {
-        @apply font-sans antialiased;
-    }
-
-    input,
-    textarea,
-    select,
-    button {
-        font: inherit;
-    }
+    /* Colors */
+    --color-succes: #30a46c;
+    --color-error: #e5484d;
 }

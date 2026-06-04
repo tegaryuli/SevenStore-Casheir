@@ -35,12 +35,62 @@ class AuthController extends Controller
             'password' => $validated['password'],
         ];
 
-        if (! Auth::attempt($credentials, (bool) ($validated['remember'] ?? false))) {
+        if (! Auth::validate($credentials)) {
             return back()->withErrors([
                 'email' => 'Email/username atau password tidak valid.',
             ])->onlyInput('email');
         }
 
+        if (is_null($user->email_verified_at)) {
+            return back()->withErrors([
+                'email' => 'Email belum diverifikasi. Silakan hubungi admin.',
+            ])->onlyInput('email');
+        }
+
+        $otp = (string) random_int(100000, 999999);
+        
+        $request->session()->put('login.id', $user->id);
+        $request->session()->put('login.otp', $otp);
+        $request->session()->put('login.remember', (bool) ($validated['remember'] ?? false));
+        
+        \Illuminate\Support\Facades\Mail::to($user->email)->queue(new \App\Mail\LoginOtpMail($otp));
+
+        return redirect()->route('auth.login.otp');
+    }
+
+    public function showOtp(Request $request)
+    {
+        if (! $request->session()->has('login.id')) {
+            return redirect()->route('login');
+        }
+
+        $user = User::find($request->session()->get('login.id'));
+
+        return Inertia::render('auth/OtpPage', [
+            'email' => $user ? $user->email : '',
+        ]);
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => ['required', 'string', 'size:6'],
+        ]);
+
+        if (! $request->session()->has('login.id') || ! $request->session()->has('login.otp')) {
+            return redirect()->route('login');
+        }
+
+        if ($request->otp !== $request->session()->get('login.otp')) {
+            return back()->withErrors(['otp' => 'Kode OTP tidak valid atau salah.']);
+        }
+
+        $user = User::find($request->session()->get('login.id'));
+        $remember = $request->session()->get('login.remember', false);
+
+        Auth::login($user, $remember);
+
+        $request->session()->forget(['login.id', 'login.otp', 'login.remember']);
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard'));
