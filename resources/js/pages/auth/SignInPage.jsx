@@ -1,7 +1,7 @@
 import { Link, useForm } from "@inertiajs/react";
 import { LabeInput } from "@/components/LabeInput";
 import { t } from "@/lib/i18n";
-import Bubbles from "@/components/Background-Bubble";
+import Bubbles from "@/components/BackgroundBubble";
 
 export default function SignInPage({ children }) {
     const { data, setData, post, processing, errors } = useForm({

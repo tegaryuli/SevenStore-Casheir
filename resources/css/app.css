@@ -1,46 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
-@import "./color/background.css";
-@import "./color/gray.css";
-@import "./color/ascent.css";
-
 @theme {
-    --color-white: #fff;
-    --color-black: #111;
+    /* Color by Figma */
+    --color-confirm: #5dd62c;
+    --color-vintage-rouge: #d52122;
+    --color-line-1px: rgba(28, 31, 51, 0.4);
+    --color-abbey-white: #f3ebd3;
+    --color-low-white: #e2e2e2;
 
-    /* Ascent*/
-    --color-blue-1: #fdfdfe;
-    --color-blue-2: #f7f9ff;
-    --color-blue-3: #edf2fe;
-    --color-blue-4: #dfeaff;
-    --color-blue-5: #d0dfff;
-    --color-blue-6: #bdd1ff;
-    --color-blue-7: #a6bff9;
-    --color-blue-8: #87a5ef;
-    --color-blue-9: #3d63dd;
-    --color-blue-10: #3657c3;
-    --color-blue-11: #395bc7;
-    --color-blue-12: #1d2e5c;
+    --color-logo-bg: #9dceff;
+    --color-blue: #0b85ff;
+    --color-blue-2: #1c1f33;
+    --color-white: #ffffff;
+    --color-dark: #111113;
+}
 
-    --color-blue-a6: #004eff42;
-    --color-blue-contrast: #fff;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
 
-    /* Gray */
-    --color-gray-1: #fcfcfd;
-    --color-gray-2: #f9f9fb;
-    --color-gray-3: #eff0f3;
-    --color-gray-4: #e7e8ec;
-    --color-gray-5: #e0e1e6;
-    --color-gray-6: #d8d9e0;
-    --color-gray-7: #cdced7;
-    --color-gray-8: #b9bbc6;
-    --color-gray-9: #8b8d98;
-    --color-gray-10: #80828d;
-    --color-gray-11: #62636c;
-    --color-gray-12: #1e1f24;
+::-webkit-scrollbar-track {
+    background: transparent;
+}
 
-    /* Colors */
-    --color-succes: #30a46c;
-    --color-error: #e5484d;
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-blue-2);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-blue);
 }

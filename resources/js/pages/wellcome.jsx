@@ -1,7 +1,7 @@
 import { usePage } from "@inertiajs/react";
-import { Button } from "@/components/Button";
+import { Button } from "@/components/ui/Button";
 import { t } from "@/lib/i18n";
-import Bubbles from "@/components/Background-Bubble";
+import Bubbles from "@/components/BackgroundBubble";
 
 export default function Wellcome() {
     const auth = usePage().props.auth;

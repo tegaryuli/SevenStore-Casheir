@@ -13,20 +13,22 @@ class UserSeeder extends Seeder
         $kasirRole = Role::query()->where('name', 'kasir')->firstOrFail();
 
         User::updateOrCreate(
-            ['email' => 'admin@toko7.com'],
+            ['email' => 'sulkerkiwe@gmail.com'],
             [
                 'name' => 'Administrator Toko',
                 'password' => 'iajwdijasidja1239123',
                 'role_id' => $adminRole->id,
+                'email_verified_at' => now(),
             ],
         );
 
         User::updateOrCreate(
-            ['email' => 'kasir1@toko7.com'],
+            ['email' => 'ngomongapasampean@gmail.com'],
             [
                 'name' => 'Kasir Satu',
                 'password' => 'iajwdijasidja1239123',
                 'role_id' => $kasirRole->id,
+                'email_verified_at' => now(),
             ],
         );
     }

@@ -21,6 +21,7 @@ class User extends Authenticatable
         'password',
         'role_id', 
         'display_id',
+        'avatar',
     ];
     protected static function booted()
     {
