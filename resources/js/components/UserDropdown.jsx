@@ -7,7 +7,7 @@ export default function UserDropdown({ user }) {
     const dropdownRef = useRef(null);
 
     const name = user?.name || "Admin Kasir";
-    const role = user?.role || "Administrator";
+    const role = user?.role?.display_name || user?.role?.name || "Administrator";
     const avatarUrl = user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0b85ff&color=fff&bold=true`;
 
     useEffect(() => {
@@ -40,8 +40,8 @@ export default function UserDropdown({ user }) {
                         <p className="text-xs font-medium text-dark opacity-80">{role}</p>
                     </div>
                     <div className="py-2 px-2 flex flex-col gap-1">
-                        <Link href="/profile" className="block w-full text-left px-4 py-2 text-sm font-medium text-blue-2 hover:bg-blue-2 hover:text-white rounded-lg transition-colors" onClick={() => setIsOpen(false)}>
-                            Pengaturan Akun
+                        <Link href="/settings/profile" className="block w-full text-left px-4 py-2 text-sm font-medium text-blue-2 hover:bg-blue-2 hover:text-white rounded-lg transition-colors" onClick={() => setIsOpen(false)}>
+                            Pengaturan
                         </Link>
                         <Link href="/logout" method="post" as="button" className="block w-full text-left px-4 py-2 text-sm font-medium text-blue-2 hover:bg-blue-2 hover:text-white rounded-lg transition-colors">
                             Logout

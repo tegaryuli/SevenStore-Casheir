@@ -5,7 +5,7 @@ export function Button({ className, children = "Children", ...props }) {
     return (
         <Link
             className={twMerge(
-                "inline-flex items-center justify-center rounded-md bg-dark px-5 py-2 text-sm font-semibold text-light border border-transparent hover:border-lidark",
+                "inline-flex items-center  rounded-md bg-dark px-5 py-2 text-sm font-semibold text-light border border-transparent hover:border-lidark",
                 className,
             )}
             {...props}

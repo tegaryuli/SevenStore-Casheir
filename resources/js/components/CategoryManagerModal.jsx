@@ -1,9 +1,14 @@
 import { useState, useRef } from "react";
 import { useForm, router } from "@inertiajs/react";
+import CustomDialog from "@/components/CustomDialog";
 
 export default function CategoryManagerModal({ categories, onClose }) {
     const [editingId, setEditingId] = useState(null);
     const fileInputRef = useRef(null);
+
+    const [dialogConfig, setDialogConfig] = useState({ isOpen: false, title: "", message: "", type: "alert", onConfirm: null });
+    const showConfirm = (title, message, onConfirm) => setDialogConfig({ isOpen: true, title, message, type: "confirm", onConfirm });
+    const closeDialog = () => setDialogConfig({ ...dialogConfig, isOpen: false });
 
     // Form for Create/Edit
     const { data, setData, post, processing, errors, reset, clearErrors } =
@@ -54,15 +59,15 @@ export default function CategoryManagerModal({ categories, onClose }) {
     };
 
     const handleDelete = (id, name) => {
-        if (
-            confirm(
-                `PERINGATAN: Apakah Anda yakin ingin menghapus kategori "${name}"? \n\nSemua relasi produk ke kategori ini akan terhapus. Jika ada produk yang HANYA memiliki kategori ini, produk tersebut juga akan TERHAPUS permanen!`,
-            )
-        ) {
-            router.delete(`/kategori/${id}`, {
-                preserveScroll: true,
-            });
-        }
+        showConfirm(
+            "Konfirmasi Hapus",
+            `Apakah Anda yakin ingin menghapus kategori "${name}"? \n\nSemua relasi produk ke kategori ini akan terhapus. Jika ada produk yang HANYA memiliki kategori ini, produk tersebut juga akan TERHAPUS permanen!`,
+            () => {
+                router.delete(`/kategori/${id}`, {
+                    preserveScroll: true,
+                });
+            }
+        );
     };
 
     return (
@@ -254,6 +259,12 @@ export default function CategoryManagerModal({ categories, onClose }) {
                     </div>
                 </div>
             </div>
+
+            {/* Custom Dialog */}
+            <CustomDialog 
+                {...dialogConfig} 
+                onClose={closeDialog} 
+            />
         </div>
     );
 }

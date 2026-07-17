@@ -17,6 +17,7 @@ class ProductController extends Controller
         $categories = Category::all();
 
         return Inertia::render('Products', [
+            'view' => 'index',
             'products' => $products,
             'categories' => $categories,
         ]);
@@ -25,7 +26,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return Inertia::render('Products/Form', [
+        return Inertia::render('Products', [
+            'view' => 'form',
             'categories' => $categories,
             'product' => null
         ]);
@@ -69,7 +71,8 @@ class ProductController extends Controller
         $produk->load('categories');
         $categories = Category::all();
         
-        return Inertia::render('Products/Form', [
+        return Inertia::render('Products', [
+            'view' => 'form',
             'categories' => $categories,
             'product' => $produk,
         ]);

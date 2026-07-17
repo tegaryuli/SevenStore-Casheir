@@ -17,7 +17,8 @@ class PosController extends Controller
         $products = Product::with('categories')->get();
         $categories = Category::all();
         
-        return Inertia::render('Pos/Index', [
+        return Inertia::render('Transaction', [
+            'view' => 'create',
             'products' => $products,
             'categories' => $categories
         ]);
@@ -68,8 +69,10 @@ class PosController extends Controller
                     'product_id' => $product->id,
                     'product_name' => $product->name,
                     'price' => $product->price,
+                    'cost_price' => $product->cost_price,
                     'quantity' => $item['quantity'],
-                    'subtotal' => $subtotal
+                    'subtotal' => $subtotal,
+                    'profit' => ($product->price - $product->cost_price) * $item['quantity']
                 ]);
 
                 // Deduct stock

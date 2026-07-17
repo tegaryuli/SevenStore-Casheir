@@ -14,8 +14,10 @@ class TransactionItem extends Model
         'product_id',
         'product_name',
         'price',
+        'cost_price',
         'quantity',
         'subtotal',
+        'profit',
     ];
 
     public function transaction()

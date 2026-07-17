@@ -74,6 +74,6 @@ class User extends Authenticatable
     public function hasRole($roleName)
     {
         // Tambahkan pengecekan null agar tidak error jika user tidak punya role
-        return $this->role && $this->role->name === $roleName;
+        return $this->role && strtolower($this->role->name) === strtolower($roleName);
     }
 }
