@@ -191,8 +191,12 @@ export default function CategoryManagerModal({ categories, onClose }) {
                                 <img
                                     src={
                                         category.image_path ||
-                                        "https://placehold.co/100x100/eeeeee/999999?text=No+Img"
+                                        "/images/Photo-error.jpg"
                                     }
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = "/images/Photo-error.jpg";
+                                    }}
                                     alt={category.name}
                                     className="w-12 h-12 rounded-lg object-cover bg-gray-50 mr-3"
                                 />

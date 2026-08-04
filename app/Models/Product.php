@@ -17,6 +17,10 @@ class Product extends Model
         'price',
         'cost_price',
         'stock',
+        'warehouse_stock',
+        'warehouse_unit',
+        'store_unit',
+        'conversion_rate',
         'image_path',
     ];
 
@@ -26,6 +30,11 @@ class Product extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function stockTransfers()
+    {
+        return $this->hasMany(StockTransfer::class);
     }
 
     /**

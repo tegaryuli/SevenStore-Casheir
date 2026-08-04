@@ -11,7 +11,7 @@ class AttendanceController extends Controller
 {
     public function index(Request $request)
     {
-        if (!$request->user()->hasRole('admin')) {
+        if (!$request->user()->hasRole('Admin')) {
             abort(403, 'Akses ditolak. Hanya Admin yang dapat melihat Laporan Absensi.');
         }
 

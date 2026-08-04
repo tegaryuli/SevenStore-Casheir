@@ -51,10 +51,11 @@ export function useCart({ showAlert, showConfirm }) {
         });
 
         if (hasError) {
-            showAlert(
-                "Stok Terbatas",
-                `Stok "${product.name}" tidak mencukupi untuk jumlah tersebut! (Tersedia: ${product.stock})`,
-            );
+            let errorMsg = `Stok "${product.name}" tidak mencukupi untuk jumlah tersebut! (Tersedia: ${product.stock})`;
+            if (product.stock <= 0 && product.warehouse_stock > 0) {
+                errorMsg = `Stok Siap Jual "${product.name}" habis! Masih ada ${product.warehouse_stock} ${product.warehouse_unit || 'segel'} di Gudang. Silakan hubungi Inventaris/Admin untuk Buka Segel.`;
+            }
+            showAlert("Stok Terbatas", errorMsg);
         }
     }, [showAlert]);
 
@@ -73,6 +74,9 @@ export function useCart({ showAlert, showConfirm }) {
                     if (newQuantity > item.product.stock) {
                         hasError = true;
                         errorMsg = `Stok "${item.product.name}" hanya tersisa ${item.product.stock} item.`;
+                        if (item.product.stock <= 0 && item.product.warehouse_stock > 0) {
+                            errorMsg = `Stok Siap Jual "${item.product.name}" habis! Masih ada ${item.product.warehouse_stock} ${item.product.warehouse_unit || 'segel'} di Gudang.`;
+                        }
                         return item;
                     }
                     return {

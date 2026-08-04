@@ -3,8 +3,8 @@ import { Link } from "@inertiajs/react";
 export function ProductGridItem({ product, formatRupiah, onDelete }) {
     const fallbackImage =
         product.categories.length > 0
-            ? product.categories[0].image_path
-            : "https://placehold.co/400x400/eeeeee/999999?text=No+Image";
+            ? product.categories[0].image_path || "/images/Photo-error.jpg"
+            : "/images/Photo-error.jpg";
     const imageSource = product.image_path || fallbackImage;
 
     return (
@@ -53,6 +53,10 @@ export function ProductGridItem({ product, formatRupiah, onDelete }) {
             <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-gray-50 mb-4 border border-low-white">
                 <img
                     src={imageSource}
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/images/Photo-error.jpg";
+                    }}
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -102,8 +106,8 @@ export function ProductGridItem({ product, formatRupiah, onDelete }) {
 export function ProductTableRow({ product, formatRupiah, onDelete }) {
     const fallbackImage =
         product.categories.length > 0
-            ? product.categories[0].image_path
-            : "https://placehold.co/100x100/eeeeee/999999?text=No+Img";
+            ? product.categories[0].image_path || "/images/Photo-error.jpg"
+            : "/images/Photo-error.jpg";
     const imageSource = product.image_path || fallbackImage;
 
     return (
@@ -112,6 +116,10 @@ export function ProductTableRow({ product, formatRupiah, onDelete }) {
                 <div className="flex items-center gap-3">
                     <img
                         src={imageSource}
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "/images/Photo-error.jpg";
+                        }}
                         alt={product.name}
                         className="w-10 h-10 rounded-lg object-cover bg-gray-100 border border-low-white"
                     />

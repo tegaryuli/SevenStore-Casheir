@@ -13,7 +13,7 @@ class TransactionHistoryController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $isStaff = $user->hasRole('kasir');
+        $isStaff = $user->hasRole('Kasir');
 
         // Jika staff, paksa tanggal ke hari ini. Jika admin, gunakan input tanggal.
         $date = $isStaff 
@@ -54,9 +54,7 @@ class TransactionHistoryController extends Controller
         // Fetch list of kasir for admin filter
         $kasirList = [];
         if (!$isStaff) {
-            $kasirList = \App\Models\User::whereHas('role', function($q) {
-                $q->where('name', 'kasir');
-            })->select('id', 'name')->get();
+            $kasirList = \App\Models\User::role(['Kasir', 'Admin'])->select('id', 'name')->get();
         }
 
         return Inertia::render('Transaction', [

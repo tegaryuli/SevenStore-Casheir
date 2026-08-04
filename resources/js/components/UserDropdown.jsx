@@ -7,7 +7,7 @@ export default function UserDropdown({ user }) {
     const dropdownRef = useRef(null);
 
     const name = user?.name || "Admin Kasir";
-    const role = user?.role?.display_name || user?.role?.name || "Administrator";
+    const role = user?.roles?.length > 0 ? user.roles.map(r => r.name).join(', ') : "Administrator";
     const avatarUrl = user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0b85ff&color=fff&bold=true`;
 
     useEffect(() => {

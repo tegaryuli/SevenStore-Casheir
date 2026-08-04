@@ -10,6 +10,7 @@ export default function ProductHeaderControls({
     viewMode,
     setViewMode,
     setIsCategoryModalOpen,
+    source = "produk",
 }) {
     return (
         <>
@@ -97,7 +98,7 @@ export default function ProductHeaderControls({
                     Kelola Kategori
                 </button>
                 <Link
-                    href="/produk/create"
+                    href={source === "gudang" ? "/produk/create?source=gudang" : "/produk/create"}
                     className="px-5 py-2 bg-blue-2 text-white font-medium rounded-xl hover:bg-blue-9 transition-colors text-sm flex items-center shadow-sm whitespace-nowrap"
                 >
                     <svg

@@ -19,7 +19,6 @@ export function useBarcodeScanner({
         let multiplier = 1;
         let searchString = scannedCode.trim();
 
-        // Check for multiplier format (e.g., "5*8991234" or "20 * Kopi")
         if (searchString.includes("*")) {
             const parts = searchString.split("*");
             const potentialMultiplier = parseInt(parts[0].trim());
@@ -55,7 +54,6 @@ export function useBarcodeScanner({
 
     useEffect(() => {
         const handleGlobalKeyDown = (e) => {
-            // Shortcut Ctrl+Enter untuk memicu Bayar Sekarang
             if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
                 e.preventDefault();
                 if (
@@ -68,7 +66,6 @@ export function useBarcodeScanner({
                 return;
             }
 
-            // Shortcut ESC untuk lepas fokus
             if (e.key === "Escape") {
                 e.preventDefault();
                 if (document.activeElement && document.activeElement.blur) {
@@ -77,7 +74,6 @@ export function useBarcodeScanner({
                 return;
             }
 
-            // Ignore if user is manually typing inside any input field
             if (
                 e.target.tagName === "INPUT" ||
                 e.target.tagName === "TEXTAREA" ||
@@ -98,7 +94,6 @@ export function useBarcodeScanner({
                     barcodeBuffer.current = "";
                     lastEnterTime.current = now;
                 } else if (now - lastEnterTime.current < 200) {
-                    // Mencegah secondary Enter (\n setelah \r) dari barcode scanner
                     e.preventDefault();
                     e.stopPropagation();
                 }

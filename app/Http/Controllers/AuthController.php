@@ -51,7 +51,7 @@ class AuthController extends Controller
         Auth::login($user, $remember);
 
         // Record attendance if user is kasir (staff)
-        if ($user->hasRole('kasir')) {
+        if ($user->hasRole('Kasir')) {
             $today = \Carbon\Carbon::today();
             $alreadyClockedIn = \App\Models\Attendance::where('user_id', $user->id)
                 ->whereDate('created_at', $today)
@@ -61,6 +61,12 @@ class AuthController extends Controller
                 \App\Models\Attendance::create(['user_id' => $user->id]);
             }
         }
+
+        \App\Models\ActivityLog::create([
+            'user_id' => $user->id,
+            'action' => 'login',
+            'description' => "User {$user->name} login ke sistem."
+        ]);
 
         $request->session()->regenerate();
 

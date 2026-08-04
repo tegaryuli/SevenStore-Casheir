@@ -36,7 +36,7 @@ export function SidebarLogo({ children, className = "", ...props }) {
 export function SidebarDivider({ className = "", ...props }) {
     return (
         <hr
-            className={`w-full border-t border-blue-2/20 ${className}`}
+            className={`w-full border-t border-white ${className}`}
             {...props}
         />
     );
@@ -56,7 +56,7 @@ export function SidebarFrame({ children, className = "", ...props }) {
 export function SidebarIcon({ children, className = "", ...props }) {
     return (
         <div
-            className={`flex items-center justify-center w-6 h-6 text-blue-2 ${className}`}
+            className={`flex items-center justify-center w-6 h-6 ${className}`}
             {...props}
         >
             {children}

@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo; // Tambahkan ini agar lebih rapi
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Prunable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes, Prunable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +22,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id', 
         'display_id',
         'avatar',
     ];
@@ -31,6 +33,14 @@ class User extends Authenticatable
 
             $user->display_id = 'USR-' . random_int(1000000, 9999999);
         });
+    }
+
+    /**
+     * Get the prunable model query.
+     */
+    public function prunable()
+    {
+        return static::where('deleted_at', '<=', now()->subHours(2));
     }
 
     /**
@@ -58,22 +68,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    /**
-     * Relasi ke tabel Role
-     */
-    public function role(): BelongsTo
-    {
-        return $this->belongsTo(Role::class);
-    }
-
-    /**
-     * Helper untuk cek role di Controller/View
-     */
-    public function hasRole($roleName)
-    {
-        // Tambahkan pengecekan null agar tidak error jika user tidak punya role
-        return $this->role && strtolower($this->role->name) === strtolower($roleName);
     }
 }

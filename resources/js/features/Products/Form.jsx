@@ -23,6 +23,10 @@ export default function ProductForm({ categories, product }) {
         sku: product?.sku || "",
         price: product?.price || "",
         stock: product?.stock || "",
+        warehouse_stock: product?.warehouse_stock || "",
+        warehouse_unit: product?.warehouse_unit || "",
+        store_unit: product?.store_unit || "",
+        conversion_rate: product?.conversion_rate || 1,
         categories: initialCategories,
         image: null,
         _method: isEdit ? "put" : "post",
@@ -61,7 +65,15 @@ export default function ProductForm({ categories, product }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const url = isEdit ? `/produk/${product.id}` : "/produk";
+        
+        const queryParams = new URLSearchParams(window.location.search);
+        const source = queryParams.get('source');
+        
+        let url = isEdit ? `/produk/${product.id}` : "/produk";
+        if (source) {
+            url += `?source=${source}`;
+        }
+        
         post(url);
     };
 
@@ -84,7 +96,10 @@ export default function ProductForm({ categories, product }) {
                     <>
                         <div className="w-full flex gap-3 justify-end ">
                             <Link
-                                href="/produk"
+                                href={(() => {
+                                    const params = new URLSearchParams(window.location.search);
+                                    return params.get('source') === 'gudang' ? '/gudang' : '/produk';
+                                })()}
                                 className="px-6 py-2 bg-low-white text-dark font-medium rounded-xl hover:bg-abbey-white transition-colors"
                             >
                                 Batal
@@ -179,6 +194,65 @@ export default function ProductForm({ categories, product }) {
                                         {errors.stock}
                                     </p>
                                 )}
+                            </div>
+                        </div>
+
+                        {/* Stok Gudang & Konversi */}
+                        <div className="border border-low-white p-5 rounded-xl bg-low-white mt-2">
+                            <label className="block text-sm font-semibold text-blue-2 mb-3">
+                                Stok Gudang & Konversi (Opsional)
+                            </label>
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                <div>
+                                    <div className="flex justify-between items-end mb-2">
+                                        <label className="block text-sm font-medium text-dark">
+                                            Stok Gudang Awal
+                                        </label>
+                                    </div>
+                                    <NumberInputWithZeros
+                                        initialValue={product?.warehouse_stock}
+                                        onChange={(val) => setData("warehouse_stock", val)}
+                                        required={false}
+                                    />
+                                    {errors.warehouse_stock && (
+                                        <p className="text-xs text-vintage-rouge mt-1">
+                                            {errors.warehouse_stock}
+                                        </p>
+                                    )}
+                                </div>
+                                <FormInput
+                                    id="warehouse_unit"
+                                    label="Satuan Gudang"
+                                    placeholder="Contoh: Dus, Karton"
+                                    value={data.warehouse_unit}
+                                    onChange={(e) => setData("warehouse_unit", e.target.value)}
+                                    error={errors.warehouse_unit}
+                                />
+                                <FormInput
+                                    id="store_unit"
+                                    label="Satuan Toko"
+                                    placeholder="Contoh: Pak, Pcs"
+                                    value={data.store_unit}
+                                    onChange={(e) => setData("store_unit", e.target.value)}
+                                    error={errors.store_unit}
+                                />
+                                <div>
+                                    <div className="flex justify-between items-end mb-2">
+                                        <label className="block text-sm font-medium text-dark">
+                                            Nilai Konversi
+                                        </label>
+                                    </div>
+                                    <NumberInputWithZeros
+                                        initialValue={product?.conversion_rate || 1}
+                                        onChange={(val) => setData("conversion_rate", val)}
+                                        required={false}
+                                    />
+                                    {errors.conversion_rate && (
+                                        <p className="text-xs text-vintage-rouge mt-1">
+                                            {errors.conversion_rate}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
                         </div>
 

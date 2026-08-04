@@ -39,6 +39,10 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'warehouse_stock' => 'nullable|integer|min:0',
+            'warehouse_unit' => 'nullable|string|max:50',
+            'store_unit' => 'nullable|string|max:50',
+            'conversion_rate' => 'nullable|integer|min:1',
             'categories' => 'required|array|min:1',
             'categories.*' => 'exists:categories,id',
             'image' => 'nullable|image|max:2048',
@@ -58,10 +62,18 @@ class ProductController extends Controller
             'sku' => $sku,
             'price' => $validated['price'],
             'stock' => $validated['stock'],
+            'warehouse_stock' => $validated['warehouse_stock'] ?? 0,
+            'warehouse_unit' => $validated['warehouse_unit'],
+            'store_unit' => $validated['store_unit'],
+            'conversion_rate' => $validated['conversion_rate'] ?? 1,
             'image_path' => $imagePath,
         ]);
 
         $product->categories()->attach($validated['categories']);
+
+        if ($request->query('source') === 'gudang') {
+            return redirect()->route('gudang.index')->with('success', 'Produk berhasil ditambahkan ke Gudang.');
+        }
 
         return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan.');
     }
@@ -84,6 +96,10 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'warehouse_stock' => 'nullable|integer|min:0',
+            'warehouse_unit' => 'nullable|string|max:50',
+            'store_unit' => 'nullable|string|max:50',
+            'conversion_rate' => 'nullable|integer|min:1',
             'categories' => 'required|array|min:1',
             'categories.*' => 'exists:categories,id',
             'image' => 'nullable|image|max:2048',
@@ -93,6 +109,10 @@ class ProductController extends Controller
         $produk->name = $validated['name'];
         $produk->price = $validated['price'];
         $produk->stock = $validated['stock'];
+        $produk->warehouse_stock = $validated['warehouse_stock'] ?? 0;
+        $produk->warehouse_unit = $validated['warehouse_unit'];
+        $produk->store_unit = $validated['store_unit'];
+        $produk->conversion_rate = $validated['conversion_rate'] ?? 1;
         $produk->sku = $validated['sku'];
 
         if ($request->hasFile('image')) {
@@ -106,6 +126,12 @@ class ProductController extends Controller
         $produk->save();
         $produk->categories()->sync($validated['categories']);
 
+        \App\Models\ActivityLog::create([
+            'user_id' => $request->user()->id,
+            'action' => 'edit_product',
+            'description' => "User {$request->user()->name} mengedit produk {$produk->name}."
+        ]);
+
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui.');
     }
 
@@ -115,7 +141,14 @@ class ProductController extends Controller
             Storage::disk('public')->delete(str_replace('/storage/', '', $produk->image_path));
         }
 
+        $productName = $produk->name;
         $produk->delete(); // Akan menghapus relasi pivot otomatis karena cascadeOnDelete di migration
+
+        \App\Models\ActivityLog::create([
+            'user_id' => request()->user()->id,
+            'action' => 'delete_product',
+            'description' => "User {" . request()->user()->name . "} menghapus produk {$productName}."
+        ]);
 
         return back()->with('success', 'Produk berhasil dihapus.');
     }

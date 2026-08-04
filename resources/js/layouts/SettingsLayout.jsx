@@ -14,7 +14,7 @@ import {
 export default function SettingsLayout({ children }) {
     const { props, url } = usePage();
     const { auth } = props;
-    const userRole = auth?.user?.role?.name;
+    const isAdmin = auth?.user?.roles?.some(role => role.name.toLowerCase() === "admin");
 
     const navItems = [
         {
@@ -29,7 +29,7 @@ export default function SettingsLayout({ children }) {
             href: "/settings/users",
             icon: BaselinePeopleIcon,
             active: url.startsWith("/settings/users"),
-            show: userRole === "admin",
+            show: isAdmin,
         },
     ];
 
@@ -84,7 +84,7 @@ export default function SettingsLayout({ children }) {
                             </SidebarItems>
                         </div>
                     </Sidebar>
-                    <main className="flex-1 overflow-y-auto bg-gray-50/50 p-6 md:p-8 relative">
+                    <main className="flex-1 overflow-y-auto p-6 md:p-8 relative">
                         {children}
                     </main>
                 </div>

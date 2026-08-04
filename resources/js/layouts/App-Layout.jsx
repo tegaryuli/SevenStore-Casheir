@@ -6,17 +6,25 @@ import { MASTER_NAVIGATIONS } from "@/lib/config/navigations";
 
 export default function AppLayout({ children }) {
     const { auth } = usePage().props;
-    const userRole = auth?.user?.role?.name;
+    const isAdmin = auth?.user?.roles?.some(
+        (role) => role.name.toLowerCase() === "admin",
+    );
+    const isInventaris = auth?.user?.roles?.some(
+        (role) => role.name.toLowerCase() === "inventaris",
+    );
+    const canAccessWarehouse = isAdmin || isInventaris;
 
     const filteredNavigations = useMemo(() => {
-        return MASTER_NAVIGATIONS.filter(
-            (nav) => !nav.isAdminOnly || userRole === "admin",
-        );
-    }, [userRole]);
+        return MASTER_NAVIGATIONS.filter((nav) => {
+            if (nav.isAdminOnly && !isAdmin) return false;
+            if (nav.isWarehouse && !canAccessWarehouse) return false;
+            return true;
+        });
+    }, [isAdmin, canAccessWarehouse]);
 
     return (
         <div className="bg-dark h-screen w-full flex flex-col overflow-hidden font-inter">
-            <AppHeadbar user={auth?.user} />
+            {/* <AppHeadbar user={auth?.user} /> */}
             <div className="h-full flex overflow-hidden p-2 gap-2">
                 <AppSidebar
                     user={auth?.user}
