@@ -3,7 +3,7 @@ import * as React from "react";
 export function Sidebar({ children, className = "", ...props }) {
     return (
         <aside
-            className={`rounded-lg flex flex-col items-center p-4 gap-2 w-fit h-full ${className}`}
+            className={`rounded-lg flex flex-col items-center p-2 gap-2 w-fit h-full ${className}`}
             {...props}
         >
             {children}

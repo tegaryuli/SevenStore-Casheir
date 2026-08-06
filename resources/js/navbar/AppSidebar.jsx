@@ -14,8 +14,12 @@ export default function AppSidebar({ navigations = [] }) {
     const { auth } = usePage().props;
     const currentUser = auth?.user;
 
-    const generalNavs = navigations.filter((nav) => !nav.isAdminOnly && nav.name !== "Notif");
-    const adminNavs = navigations.filter((nav) => nav.isAdminOnly && nav.name !== "Notif");
+    const generalNavs = navigations.filter(
+        (nav) => !nav.isAdminOnly && nav.name !== "Notif",
+    );
+    const adminNavs = navigations.filter(
+        (nav) => nav.isAdminOnly && nav.name !== "Notif",
+    );
     const notifNav = navigations.find((nav) => nav.name === "Notif");
 
     return (

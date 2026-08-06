@@ -72,6 +72,10 @@ class MinimarketSeeder extends Seeder
                 'sku' => 'SKU-' . strtoupper(Str::random(5)) . sprintf('%03d', $index),
                 'price' => $prod['price'],
                 'stock' => $prod['stock'],
+                'warehouse_stock' => rand(10, 100),
+                'warehouse_unit' => 'Karton',
+                'store_unit' => 'Pcs',
+                'conversion_rate' => rand(12, 48),
                 // image_path disengaja null, agar UI memunculkan foto dari kategori
                 'image_path' => null, 
             ]);

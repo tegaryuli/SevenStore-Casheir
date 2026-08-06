@@ -76,6 +76,10 @@ class MoreProductsSeeder extends Seeder
                 'sku' => 'SKU-' . strtoupper(Str::random(4)) . sprintf('%03d', rand(1,999)),
                 'price' => $prod['price'],
                 'stock' => $prod['stock'],
+                'warehouse_stock' => rand(5, 50),
+                'warehouse_unit' => 'Dus',
+                'store_unit' => 'Pcs',
+                'conversion_rate' => rand(12, 24),
                 'image_path' => null, // Biarkan null agar menggunakan fallback
             ]);
 

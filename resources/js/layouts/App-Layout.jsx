@@ -24,7 +24,6 @@ export default function AppLayout({ children }) {
 
     return (
         <div className="bg-dark h-screen w-full flex flex-col overflow-hidden font-inter">
-            {/* <AppHeadbar user={auth?.user} /> */}
             <div className="h-full flex overflow-hidden p-2 gap-2">
                 <AppSidebar
                     user={auth?.user}
