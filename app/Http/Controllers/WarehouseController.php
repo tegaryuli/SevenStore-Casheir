@@ -25,28 +25,33 @@ class WarehouseController extends Controller
     public function history(Request $request)
     {
         $user = $request->user();
-        $isAdmin = $user->hasRole('Admin');
         
         $query = StockTransfer::with(['product', 'user'])->latest();
         
         $filterUserId = $request->input('user_id', 'all');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
-        if (!$isAdmin) {
-            $query->where('user_id', $user->id);
-        } else if ($filterUserId !== 'all') {
+        if ($startDate) {
+            $query->whereDate('created_at', '>=', $startDate);
+        }
+        if ($endDate) {
+            $query->whereDate('created_at', '<=', $endDate);
+        }
+
+        if ($filterUserId !== 'all') {
             $query->where('user_id', $filterUserId);
         }
 
-        $staffList = [];
-        if ($isAdmin) {
-            $staffList = \App\Models\User::role(['Admin', 'Inventaris'])->select('id', 'name')->get();
-        }
+        $staffList = \App\Models\User::role('Inventaris')->select('id', 'name')->get();
         
         return Inertia::render('Warehouse', [
             'view' => 'history',
             'transfers' => $query->get(),
             'selectedUserId' => $filterUserId,
             'staffList' => $staffList,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ]);
     }
 

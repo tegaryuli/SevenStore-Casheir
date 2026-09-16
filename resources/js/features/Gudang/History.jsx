@@ -5,6 +5,7 @@ import StandardContainer from "@/components/ui/StandardContainer";
 import SearchInput from "@/components/ui/SearchInput";
 import { H1 } from "@/components/ui/CustomTag";
 import KasirSelect from "@/components/KasirSelect";
+import DatePickerButton from "@/components/ui/DatePickerButton";
 import BaselineHistoryIcon from "@iconify-react/ic/baseline-history";
 import HistoryTable from "./Components/HistoryTable";
 import dayjs from "dayjs";
@@ -12,11 +13,30 @@ import "dayjs/locale/id";
 
 dayjs.locale("id");
 
-export default function History({ transfers, staffList, selectedUserId }) {
+export default function History({ transfers, staffList, selectedUserId, startDate, endDate }) {
     const [search, setSearch] = useState("");
+    const [dateRange, setDateRange] = useState({
+        start: startDate || "",
+        end: endDate || ""
+    });
 
     const handleFilterChange = (userId) => {
-        router.get("/gudang/riwayat", { user_id: userId }, { preserveState: true });
+        router.get("/gudang/riwayat", { 
+            user_id: userId,
+            start_date: dateRange.start,
+            end_date: dateRange.end
+        }, { preserveState: true });
+    };
+
+    const handleDateChange = (field, value) => {
+        const newDateRange = { ...dateRange, [field]: value };
+        setDateRange(newDateRange);
+        
+        router.get("/gudang/riwayat", {
+            user_id: selectedUserId,
+            start_date: newDateRange.start,
+            end_date: newDateRange.end
+        }, { preserveState: true });
     };
 
     const filteredTransfers = transfers.filter(
@@ -39,7 +59,7 @@ export default function History({ transfers, staffList, selectedUserId }) {
 
             <StandardContainer
                 header={
-                    <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div className="w-full max-w-sm">
                             <SearchInput
                                 value={search}
@@ -47,15 +67,29 @@ export default function History({ transfers, staffList, selectedUserId }) {
                                 placeholder="Cari nama barang atau staf..."
                             />
                         </div>
-                        {staffList && staffList.length > 0 && (
-                            <KasirSelect 
-                                value={selectedUserId}
-                                onChange={handleFilterChange}
-                                kasirList={staffList}
-                                label="Akun:"
-                                defaultOption="Semua Akun"
-                            />
-                        )}
+                        <div className="flex flex-col xl:flex-row items-start xl:items-center gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+                            <div className="flex items-center gap-3">
+                                <DatePickerButton 
+                                    label="Mulai:"
+                                    selectedDate={dateRange.start}
+                                    onChange={(e) => handleDateChange('start', e.target.value)}
+                                />
+                                <DatePickerButton 
+                                    label="Sampai:"
+                                    selectedDate={dateRange.end}
+                                    onChange={(e) => handleDateChange('end', e.target.value)}
+                                />
+                            </div>
+                            {staffList && staffList.length > 0 && (
+                                <KasirSelect 
+                                    value={selectedUserId}
+                                    onChange={handleFilterChange}
+                                    kasirList={staffList}
+                                    label="Akun:"
+                                    defaultOption="Semua Akun"
+                                />
+                            )}
+                        </div>
                     </div>
                 }
             >

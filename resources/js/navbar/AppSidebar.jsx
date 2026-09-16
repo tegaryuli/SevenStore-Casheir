@@ -38,9 +38,9 @@ export default function AppSidebar({ navigations = [] }) {
                                 nav={notifNav}
                                 isActive={
                                     notifNav.exact
-                                        ? url === notifNav.href
-                                        : url === notifNav.href ||
-                                          url.startsWith(notifNav.href + "/")
+                                        ? url.split('?')[0] === notifNav.href
+                                        : url.split('?')[0] === notifNav.href ||
+                                          url.split('?')[0].startsWith(notifNav.href + "/")
                                 }
                             />
                         </div>
@@ -54,9 +54,9 @@ export default function AppSidebar({ navigations = [] }) {
                             nav={nav}
                             isActive={
                                 nav.exact
-                                    ? url === nav.href
-                                    : url === nav.href ||
-                                      url.startsWith(nav.href + "/")
+                                    ? url.split('?')[0] === nav.href
+                                    : url.split('?')[0] === nav.href ||
+                                      url.split('?')[0].startsWith(nav.href + "/")
                             }
                         />
                     ))}
@@ -70,9 +70,9 @@ export default function AppSidebar({ navigations = [] }) {
                             nav={nav}
                             isActive={
                                 nav.exact
-                                    ? url === nav.href
-                                    : url === nav.href ||
-                                      url.startsWith(nav.href + "/")
+                                    ? url.split('?')[0] === nav.href
+                                    : url.split('?')[0] === nav.href ||
+                                      url.split('?')[0].startsWith(nav.href + "/")
                             }
                         />
                     ))}

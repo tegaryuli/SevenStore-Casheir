@@ -14,7 +14,9 @@ import {
 export default function SettingsLayout({ children }) {
     const { props, url } = usePage();
     const { auth } = props;
-    const isAdmin = auth?.user?.roles?.some(role => role.name.toLowerCase() === "admin");
+    const isAdmin = auth?.user?.roles?.some(
+        (role) => role.name.toLowerCase() === "admin",
+    );
 
     const navItems = [
         {
@@ -44,9 +46,9 @@ export default function SettingsLayout({ children }) {
 
             <StandardContainer noBorder={true} noPadding={true}>
                 <div className="flex flex-row h-full w-full">
-                    <Sidebar className="bg-white border-r border-gray-100 flex-shrink-0 !w-64 !items-stretch">
-                        <div className="p-4">
-                            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 px-2">
+                    <Sidebar className="bg-white flex-shrink-0 !w-54~ !items-stretch">
+                        <div className="py-4">
+                            <h2 className="text-xs font-medium text-gray-400 mb-4 px-2">
                                 Menu Pengaturan
                             </h2>
                             <SidebarItems>
@@ -60,10 +62,10 @@ export default function SettingsLayout({ children }) {
                                             className="w-full"
                                         >
                                             <SidebarFrame
-                                                className={`w-full flex-row !justify-start transition-all duration-200 ${
+                                                className={`rounded-lg w-full flex-row !justify-start transition-all duration-200 ${
                                                     item.active
-                                                        ? "bg-blue text-white shadow-md shadow-blue/20"
-                                                        : "text-gray-500 hover:bg-gray-50 hover:text-blue-2"
+                                                        ? "bg-blue-2 text-white shadow-md shadow-blue/20"
+                                                        : "text-gray-500 hover:bg-gray-500 hover:text-low-white"
                                                 }`}
                                             >
                                                 <SidebarIcon
