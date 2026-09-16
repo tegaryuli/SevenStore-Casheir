@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('transaction_items', function (Blueprint $table) {
@@ -17,15 +14,14 @@ return new class extends Migration
             $table->foreignId('product_id')->nullable()->constrained('products')->onDelete('set null');
             $table->string('product_name');
             $table->decimal('price', 12, 2);
+            $table->decimal('cost_price', 15, 2)->default(0)->comment('Harga modal saat transaksi');
             $table->integer('quantity');
             $table->decimal('subtotal', 12, 2);
+            $table->decimal('profit', 15, 2)->default(0)->comment('Keuntungan (subtotal - (cost_price * qty))');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('transaction_items');
