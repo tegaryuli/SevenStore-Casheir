@@ -1,13 +1,11 @@
-import React from 'react';
+import React from "react";
 import AppLayout from "@/layouts/App-Layout";
 import SummaryCards from "./components/SummaryCards";
-import SalesChart from "./components/SalesChart";
 import TopProducts from "./components/TopProducts";
 import RecentActivities from "./components/RecentActivities";
 
 export default function DashboardPage({
     summary,
-    salesTrend,
     topProducts,
     recentActivities,
     isAdmin,
@@ -21,13 +19,13 @@ export default function DashboardPage({
 
             <SummaryCards summary={summary} />
 
-            <SalesChart salesTrend={salesTrend} />
-
             <div
                 className={`grid grid-cols-1 ${isAdmin ? "lg:grid-cols-2" : ""} gap-6 shrink-0`}
             >
                 <TopProducts topProducts={topProducts} />
-                {isAdmin && <RecentActivities recentActivities={recentActivities} />}
+                {isAdmin && (
+                    <RecentActivities recentActivities={recentActivities} />
+                )}
             </div>
         </div>
     );
