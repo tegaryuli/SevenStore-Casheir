@@ -1,8 +1,8 @@
 import React from "react";
 import AppLayout from "@/layouts/App-Layout";
-import SummaryCards from "./components/SummaryCards";
-import TopProducts from "./components/TopProducts";
-import RecentActivities from "./components/RecentActivities";
+import SummaryCards from "./Components/SummaryCards";
+import TopProducts from "./Components/TopProducts";
+import RecentActivities from "./Components/RecentActivities";
 
 export default function DashboardPage({
     summary,
