@@ -12,7 +12,7 @@ function ButtonZero({ children, className = "", ...props }) {
     );
 }
 
-export default function NumberInputWithZeros({ initialValue = "", onChange, required = false }) {
+export default function NumberInputWithZeros({ initialValue = "", onChange, required = false, disabled = false }) {
     const [base, setBase] = useState(() => {
         if (!initialValue) return "";
         return initialValue.toString().replace(/0+$/, "");
@@ -29,17 +29,19 @@ export default function NumberInputWithZeros({ initialValue = "", onChange, requ
     }, [base, zeros]);
 
     const appendZeros = (count) => {
+        if (disabled) return;
         setZeros((prev) => prev + "0".repeat(count));
     };
 
     return (
-        <div className="flex items-center w-full px-2 py-2 border border-low-white rounded-xl focus-within:ring-2 focus-within:ring-blue-2 focus-within:border-transparent bg-white transition-shadow">
+        <div className={`flex items-center w-full px-2 py-2 border border-low-white rounded-xl bg-white transition-shadow ${disabled ? 'opacity-60 bg-gray-50' : 'focus-within:ring-2 focus-within:ring-blue-2 focus-within:border-transparent'}`}>
             <input
                 type="number"
                 min="0"
                 value={base}
                 onChange={(e) => setBase(e.target.value)}
-                className="w-full px-2 focus:outline-none bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
+                disabled={disabled}
+                className="w-full px-2 focus:outline-none bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield] disabled:cursor-not-allowed"
                 required={required && !zeros}
             />
             {zeros && (
@@ -48,9 +50,9 @@ export default function NumberInputWithZeros({ initialValue = "", onChange, requ
                 </span>
             )}
             <div className="flex gap-1 ml-auto shrink-0">
-                <ButtonZero onClick={() => appendZeros(1)}>+0</ButtonZero>
-                <ButtonZero onClick={() => appendZeros(3)}>+000</ButtonZero>
-                <ButtonZero onClick={() => setZeros("")} title="Reset semua nol dari tombol">
+                <ButtonZero disabled={disabled} onClick={() => appendZeros(1)} className={disabled ? 'opacity-50 cursor-not-allowed' : ''}>+0</ButtonZero>
+                <ButtonZero disabled={disabled} onClick={() => appendZeros(3)} className={disabled ? 'opacity-50 cursor-not-allowed' : ''}>+000</ButtonZero>
+                <ButtonZero disabled={disabled} onClick={() => setZeros("")} title="Reset semua nol dari tombol" className={disabled ? 'opacity-50 cursor-not-allowed' : ''}>
                     ⌫ 0
                 </ButtonZero>
             </div>

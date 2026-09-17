@@ -1,5 +1,5 @@
 import { useState, useRef, useMemo, useCallback } from "react";
-import { Head, useForm, Link } from "@inertiajs/react";
+import { Head, useForm, Link, usePage } from "@inertiajs/react";
 import AppLayout from "@/layouts/App-Layout";
 import Breadcrumb from "@/components/Breadcrumb";
 import NumberInputWithZeros from "@/components/NumberInputWithZeros";
@@ -8,6 +8,10 @@ import FormInput from "@/components/ui/FormInput";
 import StandardContainer from "@/components/ui/StandardContainer";
 
 export default function ProductForm({ categories, product }) {
+    const { auth } = usePage().props;
+    const isAdmin = auth?.user?.roles?.some(
+        (role) => role.name.toLowerCase() === "admin",
+    );
     const isEdit = !!product;
     const fileInputRef = useRef(null);
     const [imagePreview, setImagePreview] = useState(
@@ -183,11 +187,15 @@ export default function ProductForm({ categories, product }) {
                                             *
                                         </span>
                                     </label>
+                                    {(isEdit && !isAdmin) && (
+                                        <span className="text-xs text-blue-2 font-medium bg-blue-50 px-2 py-0.5 rounded">Hanya Admin</span>
+                                    )}
                                 </div>
                                 <NumberInputWithZeros
                                     initialValue={product?.stock}
                                     onChange={(val) => setData("stock", val)}
                                     required={true}
+                                    disabled={isEdit && !isAdmin}
                                 />
                                 {errors.stock && (
                                     <p className="text-xs text-vintage-rouge mt-1">
@@ -208,11 +216,15 @@ export default function ProductForm({ categories, product }) {
                                         <label className="block text-sm font-medium text-dark">
                                             Stok Gudang Awal
                                         </label>
+                                        {(isEdit && !isAdmin) && (
+                                            <span className="text-xs text-blue-2 font-medium bg-blue-50 px-2 py-0.5 rounded">Hanya Admin</span>
+                                        )}
                                     </div>
                                     <NumberInputWithZeros
                                         initialValue={product?.warehouse_stock}
                                         onChange={(val) => setData("warehouse_stock", val)}
                                         required={false}
+                                        disabled={isEdit && !isAdmin}
                                     />
                                     {errors.warehouse_stock && (
                                         <p className="text-xs text-vintage-rouge mt-1">

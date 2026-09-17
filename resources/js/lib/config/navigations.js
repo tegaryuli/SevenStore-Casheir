@@ -19,6 +19,7 @@ export const MASTER_NAVIGATIONS = [
         name: "Payment",
         href: "/pos",
         icon: BaselineShoppingCartIcon,
+        isKasirOrAdmin: true,
         description: "Kelola seluruh transaksi pelanggan Anda di sini.",
     },
     {
@@ -32,6 +33,7 @@ export const MASTER_NAVIGATIONS = [
         name: "Riwayat Transaksi",
         href: "/histori-transaksi",
         icon: BaselineAssignmentIcon,
+        isKasirOrAdmin: true,
         description:
             "Pantau riwayat penjualan, performa kasir, dan aliran uang Anda.",
     },

@@ -12,15 +12,20 @@ export default function AppLayout({ children }) {
     const isInventaris = auth?.user?.roles?.some(
         (role) => role.name.toLowerCase() === "inventaris",
     );
+    const isKasir = auth?.user?.roles?.some(
+        (role) => role.name.toLowerCase() === "kasir",
+    );
     const canAccessWarehouse = isAdmin || isInventaris;
+    const canAccessPos = isAdmin || isKasir;
 
     const filteredNavigations = useMemo(() => {
         return MASTER_NAVIGATIONS.filter((nav) => {
             if (nav.isAdminOnly && !isAdmin) return false;
             if (nav.isWarehouse && !canAccessWarehouse) return false;
+            if (nav.isKasirOrAdmin && !canAccessPos) return false;
             return true;
         });
-    }, [isAdmin, canAccessWarehouse]);
+    }, [isAdmin, canAccessWarehouse, canAccessPos]);
 
     return (
         <div className="bg-dark h-screen w-full flex flex-col overflow-hidden font-inter">

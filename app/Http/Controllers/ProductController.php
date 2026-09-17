@@ -92,11 +92,11 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $produk)
     {
-        $validated = $request->validate([
+        $isAdmin = $request->user()->hasRole('Admin');
+
+        $rules = [
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'warehouse_stock' => 'nullable|integer|min:0',
             'warehouse_unit' => 'nullable|string|max:50',
             'store_unit' => 'nullable|string|max:50',
             'conversion_rate' => 'nullable|integer|min:1',
@@ -104,12 +104,23 @@ class ProductController extends Controller
             'categories.*' => 'exists:categories,id',
             'image' => 'nullable|image|max:2048',
             'sku' => 'required|string|unique:products,sku,' . $produk->id,
-        ]);
+        ];
+
+        if ($isAdmin) {
+            $rules['stock'] = 'required|integer|min:0';
+            $rules['warehouse_stock'] = 'nullable|integer|min:0';
+        }
+
+        $validated = $request->validate($rules);
 
         $produk->name = $validated['name'];
         $produk->price = $validated['price'];
-        $produk->stock = $validated['stock'];
-        $produk->warehouse_stock = $validated['warehouse_stock'] ?? 0;
+        
+        if ($isAdmin) {
+            $produk->stock = $validated['stock'];
+            $produk->warehouse_stock = $validated['warehouse_stock'] ?? 0;
+        }
+
         $produk->warehouse_unit = $validated['warehouse_unit'];
         $produk->store_unit = $validated['store_unit'];
         $produk->conversion_rate = $validated['conversion_rate'] ?? 1;

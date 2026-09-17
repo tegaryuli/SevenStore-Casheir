@@ -24,12 +24,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     
-    // POS Routes
-    Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
-    Route::post('/pos/checkout', [PosController::class, 'checkout'])->name('pos.checkout');
-    
-    // Transaction History
-    Route::get('/histori-transaksi', [TransactionHistoryController::class, 'index'])->name('transactions.history');
+    // POS & Transaction History Routes (Admin & Kasir only)
+    Route::middleware(['role:Admin|Kasir'])->group(function () {
+        Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
+        Route::post('/pos/checkout', [PosController::class, 'checkout'])->name('pos.checkout');
+        Route::get('/histori-transaksi', [TransactionHistoryController::class, 'index'])->name('transactions.history');
+    });
     
     // Attendance Routes
     Route::get('/laporan/absensi', [AttendanceController::class, 'index'])->name('attendances.index');
